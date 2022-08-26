@@ -2,10 +2,10 @@ const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const { init: initDB } = require("./db");
+const { Sequelize } = require("sequelize");
+const { init: initDB, SweetNothings } = require("./db");
 
 const logger = morgan("tiny");
-
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -25,6 +25,43 @@ app.get("/api/wx_openid", async (req, res) => {
     res.send(req.headers["x-wx-openid"]);
   }
 });
+
+// 记录情话
+app.post('/api/sweet-nothings', async (req, res) => {
+  const sentences = req.body.sentences ?? []
+  try {
+    for (const sentence of sentences) {
+      await SweetNothings.create({ sentence })
+      console.log(`添加了一句情话：${sentence}`)
+    }
+    res.json({ statusMsg: '添加情话成功！' })
+  } catch (err) {
+    res.status(400)
+    res.json({ statusMsg: '添加情话失败！', errMsg: String(err) })
+  }
+})
+
+// 获取一句情话
+app.get('/api/sweet-nothings', async (_, res) => {
+  try {
+    const radomRecord = await SweetNothings.findOne({
+      order: [Sequelize.literal('rand()')]
+    })
+    if (randomRecord.sentence) {
+      res.json({
+        statusMsg: '获取情话成功！',
+        sentence: radomRecord.sentence,
+      })
+    } else {
+      throw Error('情话记录没有 sentence 字段！')
+    }
+  } catch (err) {
+    res.json({
+      statusMsg: '获取情话失败！',
+      errMsg: String(err)
+    })
+  }
+})
 
 const port = process.env.PORT || 80;
 

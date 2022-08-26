@@ -10,12 +10,20 @@ const sequelize = new Sequelize("tree-hole", MYSQL_USERNAME, MYSQL_PASSWORD, {
 });
 
 // 定义数据模型
+const SweetNothings = sequelize.define('SweetNothings', {
+  sentence: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+})
 
 async function init() {
   // 数据库初始化方法
+  await SweetNothings.sync({ alter: true })
 }
 
 // 导出初始化方法和模型
 module.exports = {
   init,
+  SweetNothings,
 };
