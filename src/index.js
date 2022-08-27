@@ -14,7 +14,7 @@ app.use(logger);
 
 // 首页
 app.use('/admin', express.static (path.join(__dirname, "../admin-view")))
-app.get("/", async (req, res) => {
+app.get("/", async (_, res) => {
   res.sendFile(path.join(__dirname, "../admin-view/index.html"));
 });
 
@@ -30,12 +30,14 @@ app.get("/api/wx_openid", async (req, res) => {
 app.post('/api/sweet-nothings', async (req, res) => {
   const sentences = req.body.sentences ?? []
   try {
-    for (const sentence of sentences) {
-      await SweetNothings.create({ sentence })
-      console.log(`添加了一句情话：${sentence}`)
-    }
+    await Promise.all(
+      sentences.map(async sentence => {
+        const sweet = await SweetNothings.create({ sentence })
+        console.log(`添加了一句情话：${sweet.sentence}`)
+      })
+    )
     res.json({ statusMsg: '添加情话成功！' })
-  } catch (err) {
+  } catch (error) {
     res.status(400)
     res.json({ statusMsg: '添加情话失败！', errMsg: String(err) })
   }
