@@ -1,9 +1,6 @@
 const { DataTypes } = require("sequelize");
 
-/**
- * @param {import("sequelize/types").Sequelize} sequelize
- * @returns {import("sequelize/types").ModelStatic} sweetNothingsModel
- */
+/** @type {import('sequelize/types').ModelAttributes} */
 const SweetNothingsDef = {
   sentence: {
     type: DataTypes.STRING,

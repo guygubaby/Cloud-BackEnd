@@ -1,9 +1,6 @@
 const { DataTypes } = require("sequelize");
 
-/**
- * @param {import("sequelize/types").Sequelize} sequelize 
- * @returns {import("sequelize/types").ModelStatic} cropsModel
- */
+/** @type {import('sequelize/types').ModelAttributes} */
 const CropsDef = {
   cropId: {
     type: DataTypes.STRING,
@@ -26,12 +23,12 @@ const CropsDef = {
   seedCount: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    default: 0,
+    defaultValue: 0,
   },
   harvestCount: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    default: 0,
+    defaultValue: 0,
   },
   onSaleCount: {
     type: DataTypes.INTEGER,

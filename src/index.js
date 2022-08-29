@@ -7,6 +7,7 @@ const {
   init: initDB, 
   SweetNothings,
   Crops,
+  Farmer,
 } = require("./db");
 
 const logger = morgan("tiny");
@@ -30,7 +31,7 @@ app.get("/api/wx_openid", async (req, res) => {
   }
 });
 
-// 记录情话
+// 记录保存情话
 app.post('/api/sweet-nothings', async (req, res) => {
   const sentences = req.body.sentences ?? []
   try {
@@ -46,7 +47,6 @@ app.post('/api/sweet-nothings', async (req, res) => {
     res.json({ statusMsg: '添加情话失败！', errMsg: String(err) })
   }
 })
-
 // 获取一句情话
 app.get('/api/sweet-nothings', async (_, res) => {
   try {
@@ -69,6 +69,7 @@ app.get('/api/sweet-nothings', async (_, res) => {
   }
 })
 
+// 初始化农场作物数据
 app.post('/api/farmland/init-crops', async (_, res) => {
   const initData = require('./data/crops-init-data')
   try {
@@ -89,6 +90,22 @@ app.post('/api/farmland/init-crops', async (_, res) => {
     })
   }
 })
+// 初始化农场耕种信息
+app.post('/api/farmland/init-farmer', async (_, res) => {
+  try {
+    await Farmer.create({ name: '琳琳' })
+    res.json({
+      statusMsg: '初始化耕种者成功！',
+    })
+  } catch (err) {
+    res.status(400)
+    res.json({
+      statusMsg: '初始化耕种者失败！',
+      errMsg: String(err)
+    })
+  }
+})
+
 
 const port = process.env.PORT || 80;
 
