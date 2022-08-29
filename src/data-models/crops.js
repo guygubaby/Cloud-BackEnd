@@ -4,7 +4,7 @@ const { DataTypes } = require("sequelize");
  * @param {import("sequelize/types").Sequelize} sequelize 
  * @returns {import("sequelize/types").ModelStatic} cropsModel
  */
-const Crops = (sequelize) => sequelize.define('Crops', {
+const CropsDef = {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -28,6 +28,6 @@ const Crops = (sequelize) => sequelize.define('Crops', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-})
+}
 
-module.exports = Crops
+module.exports = CropsDef

@@ -3,7 +3,10 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const { Sequelize } = require("sequelize");
-const { init: initDB, SweetNothings } = require("./db");
+const { 
+  init: initDB, 
+  SweetNothings,
+} = require("./db");
 
 const logger = morgan("tiny");
 const app = express();
@@ -46,13 +49,13 @@ app.post('/api/sweet-nothings', async (req, res) => {
 // 获取一句情话
 app.get('/api/sweet-nothings', async (_, res) => {
   try {
-    const radomRecord = await SweetNothings.findOne({
+    const randomRecord = await SweetNothings.findOne({
       order: [Sequelize.literal('rand()')]
     })
     if (randomRecord.sentence) {
       res.json({
         statusMsg: '获取情话成功！',
-        sentence: radomRecord.sentence,
+        sentence: randomRecord.sentence,
       })
     } else {
       throw Error('情话记录没有 sentence 字段！')

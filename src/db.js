@@ -1,4 +1,6 @@
 const { Sequelize } = require("sequelize");
+const SweetNothingsDef = require('./data-models/sweet-nothings')
+const CropsDef = require('./data-models/crops')
 
 // 从环境变量中读取数据库配置
 const { MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_ADDRESS = "" } = process.env;
@@ -10,8 +12,8 @@ const sequelize = new Sequelize("tree-hole", MYSQL_USERNAME, MYSQL_PASSWORD, {
 });
 
 // 定义数据模型
-const SweetNothings = require('./data-models/sweet-nothings')(sequelize)
-const Crops = require('./data-models/crops')(sequelize)
+const SweetNothings = sequelize.define('SweetNothings', SweetNothingsDef)
+const Crops = sequelize.define('Crops', CropsDef)
 
 async function init() {
   // 数据库初始化方法
