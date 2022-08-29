@@ -69,7 +69,7 @@ app.get('/api/sweet-nothings', async (_, res) => {
   }
 })
 
-app.post('/api/init-farmland', async (_, res) => {
+app.post('/api/farmland/init-crops', async (_, res) => {
   const initData = require('./data/crops-init-data')
   try {
     await Promise.all(
