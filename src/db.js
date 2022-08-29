@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
-const SweetNothingsDef = require('./data-models/sweet-nothings')
-const CropsDef = require('./data-models/crops')
+const SweetNothingsDef = require('./db-models/sweet-nothings')
+const CropsDef = require('./db-models/crops')
 
 // 从环境变量中读取数据库配置
 const { MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_ADDRESS = "" } = process.env;
@@ -25,4 +25,5 @@ async function init() {
 module.exports = {
   init,
   SweetNothings,
+  Crops,
 };

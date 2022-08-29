@@ -6,6 +6,7 @@ const { Sequelize } = require("sequelize");
 const { 
   init: initDB, 
   SweetNothings,
+  Crops,
 } = require("./db");
 
 const logger = morgan("tiny");
@@ -63,6 +64,27 @@ app.get('/api/sweet-nothings', async (_, res) => {
   } catch (err) {
     res.json({
       statusMsg: '获取情话失败！',
+      errMsg: String(err)
+    })
+  }
+})
+
+app.post('/api/init-farmland', async (_, res) => {
+  const initData = require('./data/crops-init-data')
+  try {
+    await Promise.all(
+      initData
+        .map(async crop => {
+          await Crops.create(crop)
+        })
+    )
+    res.json({
+      statusMsg: '初始化农场成功！',
+    })
+  } catch (err) {
+    res.status(400)
+    res.json({
+      statusMsg: '初始化农场失败！',
       errMsg: String(err)
     })
   }
