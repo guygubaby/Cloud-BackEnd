@@ -9,7 +9,7 @@ const {
   Crops,
   Farmer,
 } = require("./db");
-const { getCropsList } = require("./db-dao/crop-dao");
+const { getCropsOnSaleList } = require("./db-dao/crop-dao");
 
 const logger = morgan("tiny");
 const app = express();
@@ -126,7 +126,7 @@ app.get('/api/farmland/status', async (req, res) => {
 // 获取农场商店可出售列表
 app.get('/api/farmland/on-sale', async (req, res) => {
   try {
-    const crops = await getCropsList()
+    const crops = await getCropsOnSaleList()
     res.json({
       statusMsg: '获取农场商店出售表成功！',
       crops,

@@ -1,33 +1,29 @@
 const { Crops } = require('../db')
 
 /**
- * @returns {{ 
- *   cropId: string;
- *   name: string;
- *   description: string;
- *   requiredLevel: number;
- *   seedCount: number;
- *   harvestCount: number;
- *   onSaleCount: number;
- *   price: number;
+ * @return {{
+ *  cropId: string
+ *  name: string
+ *  description: string
+ *  onSaleCount: number
+ *  price: number
+ *  requiredLevel: number
  * }}
  */
-async function getCropsList() {
+async function getCropsOnSaleList() {
   const cropsData = await Crops.findAll()
   return cropsData.map(dataItem => {
     return {
       cropId: dataItem.cropId,
       name: dataItem.name,
       description: dataItem.description,
-      requiredLevel: dataItem.requiredLevel,
-      seedCount: dataItem.seedCount,
-      harvestCount: dataItem.harvestCount,
       onSaleCount: dataItem.onSaleCount,
-      price: dataItem.price
+      price: dataItem.price,
+      requiredLevel: dataItem.requiredLevel,
     }
   })
 }
 
 module.exports = {
-  getCropsList,
+  getCropsOnSaleList,
 }
