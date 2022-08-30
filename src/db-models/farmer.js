@@ -22,6 +22,11 @@ const FarmerDef = {
     allowNull: false,
     defaultValue: 0
   },
+  GridCount: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 3
+  }
 }
 
 module.exports = FarmerDef
