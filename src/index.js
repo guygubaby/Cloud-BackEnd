@@ -9,6 +9,7 @@ const {
   Crops,
   Farmer,
 } = require("./db");
+const { getCropsList } = require("./db-dao/crop-dao");
 
 const logger = morgan("tiny");
 const app = express();
@@ -111,13 +112,29 @@ app.get('/api/farmland/status', async (req, res) => {
     const { name } = req.query
     const farmer = await Farmer.findOne({ name })
     res.json({
-      statusMsg: `获取耕种者 [${name}] 状态成功！`,
+      statusMsg: `获取耕种者状态成功！`,
       farmer,
     })
   } catch (err) {
     res.status(400)
     res.json({
       statusMsg: '获取耕种者状态信息失败！',
+      errMsg: String(err)
+    })
+  }
+})
+// 获取农场商店可出售列表
+app.get('/api/farmland/on-sale', async (req, res) => {
+  try {
+    const crops = await getCropsList()
+    res.json({
+      statusMsg: '获取农场商店出售表成功！',
+      crops,
+    })
+  } catch (err) {
+    res.status(400)
+    res.json({
+      statusMsg: '获取农场商店出售表失败！',
       errMsg: String(err)
     })
   }
