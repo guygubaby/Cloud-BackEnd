@@ -43,7 +43,7 @@ app.post('/api/sweet-nothings', async (req, res) => {
       })
     )
     res.json({ statusMsg: '添加情话成功！' })
-  } catch (error) {
+  } catch (err) {
     res.status(400)
     res.json({ statusMsg: '添加情话失败！', errMsg: String(err) })
   }
