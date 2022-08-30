@@ -105,6 +105,23 @@ app.post('/api/farmland/init-farmer', async (_, res) => {
     })
   }
 })
+// 获取农场耕种信息
+app.get('/api/farmland/status', async (req, res) => {
+  try {
+    const { name } = req.query
+    const farmer = await Farmer.findOne({ name })
+    res.json({
+      statusMsg: `获取耕种者 [${name}] 状态成功！`,
+      farmer,
+    })
+  } catch (err) {
+    res.status(400)
+    res.json({
+      statusMsg: '获取耕种者状态信息失败！',
+      errMsg: String(err)
+    })
+  }
+})
 
 
 const port = process.env.PORT || 80;
