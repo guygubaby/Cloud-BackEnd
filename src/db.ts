@@ -28,10 +28,14 @@ const Crops = sequelize.define<CropsInstance>("Crops", CropsDef);
 const Farmer = sequelize.define<FarmerInstance>("Farmer", FarmerDef);
 
 async function initDB() {
-  // 数据库初始化方法
-  await SweetNothings.sync({ alter: true });
-  await Crops.sync({ alter: true });
-  await Farmer.sync({ alter: true });
+  try {
+    // 数据库初始化方法
+    await SweetNothings.sync({ alter: true });
+    await Crops.sync({ alter: true });
+    await Farmer.sync({ alter: true });
+  } catch (err) {
+    console.log(`数据库初始化出错了：${err}`);
+  }
 }
 
 // 导出初始化方法和模型
