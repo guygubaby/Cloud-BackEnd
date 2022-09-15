@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
+import { DataTypes } from "sequelize";
+import type { Model } from "sequelize";
 
-/** @type {import('sequelize/types').ModelAttributes} */
-const CropsDef = {
+export const CropsDef = {
   cropId: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -39,6 +39,16 @@ const CropsDef = {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-}
+};
 
-module.exports = CropsDef
+export type CropsAttributes = {
+  cropId: string;
+  name: string;
+  description: string;
+  requiredLevel: number;
+  seedCount: number;
+  harvestCount: number;
+  onSaleCount: number;
+  price: number;
+};
+export type CropsInstance = Model<CropsAttributes> & CropsAttributes;

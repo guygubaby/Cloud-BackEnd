@@ -25,11 +25,14 @@ RUN npm install -g pnpm@latest
 RUN pnpm config set registry https://mirrors.cloud.tencent.com/npm/
 # RUN npm config set registry https://registry.npm.taobao.org/
 
-# npm 安装依赖
+# 安装依赖
 RUN pnpm install
 
 # 将当前目录（dockerfile所在目录）下所有文件都拷贝到工作目录下（.dockerignore中文件除外）
 COPY . /app
+
+# ts 打包
+RUN pnpm build
 
 # 执行启动命令
 # 写多行独立的CMD命令是错误写法！只有最后一行CMD命令会被执行，之前的都会被忽略，导致业务报错。

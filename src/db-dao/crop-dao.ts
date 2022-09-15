@@ -1,4 +1,4 @@
-const { Crops } = require('../db')
+import { Crops } from "../db";
 
 /**
  * @return {{
@@ -11,8 +11,8 @@ const { Crops } = require('../db')
  * }}
  */
 async function getCropsOnSaleList() {
-  const cropsData = await Crops.findAll()
-  return cropsData.map(dataItem => {
+  const cropsData = await Crops.findAll();
+  return cropsData.map((dataItem) => {
     return {
       cropId: dataItem.cropId,
       name: dataItem.name,
@@ -20,10 +20,8 @@ async function getCropsOnSaleList() {
       onSaleCount: dataItem.onSaleCount,
       price: dataItem.price,
       requiredLevel: dataItem.requiredLevel,
-    }
-  })
+    };
+  });
 }
 
-module.exports = {
-  getCropsOnSaleList,
-}
+export { getCropsOnSaleList };
