@@ -31,18 +31,28 @@ const SweetNothings = sequelize.define<SweetNothingsInstance>(
 const Crops = sequelize.define<CropsInstance>("Crops", CropsDef);
 const Farmer = sequelize.define<FarmerInstance>("Farmer", FarmerDef);
 
-async function initDB() {
-  try {
-    // 数据库初始化方法
-    await SweetNothings.sync({ alter: true });
-    await Crops.sync({ alter: true });
-    await Farmer.sync({ alter: true });
+const entitiesMap = {
+  SweetNothings,
+  Crops,
+  Farmer,
+};
 
-    // 启动一些定时任务
-    setupTasks();
+function tryInitEntity(name: keyof typeof entitiesMap) {
+  try {
+    entitiesMap[name].sync();
   } catch (err) {
-    logger.error(`数据库初始化出错了：${err}`);
+    logger.error(`数据库实体 ${name} 初始化出错了：${err}`);
   }
+}
+
+async function initDB() {
+  // 数据库初始化方法
+  tryInitEntity("SweetNothings");
+  tryInitEntity("Crops");
+  tryInitEntity("Farmer");
+
+  // 启动一些定时任务
+  setupTasks();
 }
 
 // 导出初始化方法和模型
