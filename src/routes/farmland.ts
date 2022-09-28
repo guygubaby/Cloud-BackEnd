@@ -60,12 +60,12 @@ bindRouteHandler(
     try {
       const { name } = req.query;
       const farmer = await Farmer.findOne({
-        where: { name },
+        where: { name: decodeURIComponent(name) },
       });
       if (!farmer) {
         throw new Error(`没有找到耕种者 ${name} 的信息`);
       }
-      res.json({
+      res.status(200).json({
         statusMsg: `获取耕种者状态成功！`,
         farmer,
       });
