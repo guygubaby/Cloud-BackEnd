@@ -59,6 +59,7 @@ bindRouteHandler(
   async (req, res) => {
     try {
       const { name } = req.query;
+      console.log(`🚀 正在查询耕种者 ${name} 的信息 ...`);
       const farmer = await Farmer.findOne({
         where: { name: decodeURIComponent(name) },
       });
