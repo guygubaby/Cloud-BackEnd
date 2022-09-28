@@ -62,6 +62,9 @@ bindRouteHandler(
       const farmer = await Farmer.findOne({
         where: { name },
       });
+      if (!farmer) {
+        throw new Error(`没有找到耕种者 ${name} 的信息`);
+      }
       res.json({
         statusMsg: `获取耕种者状态成功！`,
         farmer,
