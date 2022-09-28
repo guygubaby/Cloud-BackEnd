@@ -2,8 +2,10 @@ import express from "express";
 import { Sequelize } from "sequelize";
 import { SweetNothings } from "../db";
 import { bindRouteHandler } from "../shared";
+import { createLogger } from "../utils/logger";
 import type { Router } from "express";
 
+const logger = createLogger("Route SweetNothings");
 export const sweetNothingsRouter: Router = express.Router();
 
 // 记录保存情话
@@ -17,7 +19,7 @@ bindRouteHandler(
       await Promise.all(
         sentences.map(async (sentence) => {
           const sweet = await SweetNothings.create({ sentence });
-          console.log(`添加了一句情话：${sweet.sentence}`);
+          logger.info(`添加了一句情话：${sweet.sentence}`);
         })
       );
       res.json({ statusMsg: "添加情话成功！" });

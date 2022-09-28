@@ -1,4 +1,4 @@
-import { Crops } from "../db";
+import { Crops } from "..";
 
 /**
  * @return {{

@@ -1,10 +1,12 @@
 import express from "express";
 import { Crops, Farmer } from "../db";
-import { getCropsOnSaleList } from "../db-dao/crop-dao";
+import { getCropsOnSaleList } from "../db/db-dao/crop-dao";
 import { cropsData } from "../data/crops-init-data";
 import { bindRouteHandler } from "../shared";
+import { createLogger } from "../utils/logger";
 import type { Router } from "express";
 
+const logger = createLogger("Route Farmland");
 export const farmlandRouter: Router = express.Router();
 
 // 初始化农场作物数据
@@ -59,7 +61,7 @@ bindRouteHandler(
   async (req, res) => {
     try {
       const { name } = req.query;
-      console.log(`🚀 正在查询耕种者 ${name} 的信息 ...`);
+      logger.info(`🚀 正在查询耕种者 ${name} 的信息 ...`);
       const farmer = await Farmer.findOne({
         where: { name: decodeURIComponent(name) },
       });

@@ -1,10 +1,14 @@
 import { Sequelize } from "sequelize";
+import { createLogger } from "../utils/logger";
+import { setupTasks } from "../tasks";
 import { SweetNothingsDef } from "./db-models/sweet-nothings";
 import { CropsDef } from "./db-models/crops";
 import { FarmerDef } from "./db-models/farmer";
 import type { FarmerInstance } from "./db-models/farmer";
 import type { CropsInstance } from "./db-models/crops";
 import type { SweetNothingsInstance } from "./db-models/sweet-nothings";
+
+const logger = createLogger("db Entrypoint");
 
 // 从环境变量中读取数据库配置
 const {
@@ -33,8 +37,11 @@ async function initDB() {
     await SweetNothings.sync({ alter: true });
     await Crops.sync({ alter: true });
     await Farmer.sync({ alter: true });
+
+    // 启动一些定时任务
+    setupTasks();
   } catch (err) {
-    console.log(`数据库初始化出错了：${err}`);
+    logger.error(`数据库初始化出错了：${err}`);
   }
 }
 

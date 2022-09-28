@@ -18,3 +18,15 @@ export function bindRouteHandler<P extends keyof RequestMetaMap>(
   // @ts-ignore
   router[method.toLowerCase()](path, ...handlers);
 }
+
+export const cropsMaxiumMap = new Map([
+  [1, 100],
+  [2, 100],
+  [4, 80],
+  [5, 80],
+  [6, 40],
+  [7, 40],
+  [8, 30],
+  [9, 30],
+  [10, 20],
+]);
