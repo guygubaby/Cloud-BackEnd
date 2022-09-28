@@ -60,10 +60,11 @@ bindRouteHandler(
   "/api/farmland/status",
   async (req, res) => {
     try {
-      const { name } = req.query;
+      let { name } = req.query;
+      name = decodeURIComponent(name);
       logger.info(`🚀 正在查询耕种者 ${name} 的信息 ...`);
       const farmer = await Farmer.findOne({
-        where: { name: decodeURIComponent(name) },
+        where: { name },
       });
       if (!farmer) {
         throw new Error(`没有找到耕种者 ${name} 的信息`);
