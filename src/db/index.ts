@@ -3,6 +3,8 @@ import { SweetNothingsDef } from "./db-models/sweet-nothings";
 import { CropsDef } from "./db-models/crops";
 import { FarmerDef } from "./db-models/farmer";
 import { setupDB } from "./setup";
+import { MenstruationDef } from "./db-models/menstruation";
+import type { MenstruationInstance } from "./db-models/menstruation";
 import type { FarmerInstance } from "./db-models/farmer";
 import type { CropsInstance } from "./db-models/crops";
 import type { SweetNothingsInstance } from "./db-models/sweet-nothings";
@@ -28,11 +30,16 @@ const SweetNothings = sequelize.define<SweetNothingsInstance>(
 );
 const Crops = sequelize.define<CropsInstance>("Crops", CropsDef);
 const Farmer = sequelize.define<FarmerInstance>("Farmer", FarmerDef);
+const Menstruation = sequelize.define<MenstruationInstance>(
+  "Menstruation",
+  MenstruationDef
+);
 
 const entitiesMap = {
   SweetNothings,
   Crops,
   Farmer,
+  Menstruation,
 };
 
 async function initDB() {

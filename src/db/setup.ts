@@ -1,6 +1,7 @@
 import { setupTasks } from "../tasks";
 import { createLogger } from "../utils/logger";
 import { SequelizeConnectionRefusedErrorName } from "../shared";
+import type { MenstruationInstance } from "./db-models/menstruation";
 import type { SweetNothingsInstance } from "./db-models/sweet-nothings";
 import type { CropsInstance } from "./db-models/crops";
 import type { FarmerInstance } from "./db-models/farmer";
@@ -12,6 +13,7 @@ interface EntitiesMap {
   SweetNothings: ModelStatic<SweetNothingsInstance>;
   Crops: ModelStatic<CropsInstance>;
   Farmer: ModelStatic<FarmerInstance>;
+  Menstruation: ModelStatic<MenstruationInstance>;
 }
 
 function isDatabaseConnectionError(err: any): err is Error & { name: string } {
@@ -38,9 +40,9 @@ function tryInitEntity(entitiesMap: EntitiesMap, name: keyof EntitiesMap) {
 }
 function syncModelsStruct(entitiesMap: EntitiesMap) {
   Promise.all([
-    tryInitEntity(entitiesMap, "SweetNothings"),
-    tryInitEntity(entitiesMap, "Crops"),
-    tryInitEntity(entitiesMap, "Farmer"),
+    Object.keys(entitiesMap).map((tableName) =>
+      tryInitEntity(entitiesMap, tableName as keyof EntitiesMap)
+    ),
   ]).then((results) => {
     if (!results.every(Boolean)) {
       process.exit();
