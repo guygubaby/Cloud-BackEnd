@@ -1,5 +1,5 @@
 import express from "express";
-import { Sequelize } from "sequelize";
+import { Sequelize } from "@sequelize/core";
 import { SweetNothings } from "../db";
 import { bindRouteHandler } from "../shared";
 import { createLogger } from "../utils/logger";

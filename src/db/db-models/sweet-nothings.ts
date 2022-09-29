@@ -1,5 +1,5 @@
-import { DataTypes } from "sequelize";
-import type { Model } from "sequelize";
+import { DataTypes } from "@sequelize/core";
+import type { Model } from "@sequelize/core";
 
 export const SweetNothingsDef = {
   sentence: {

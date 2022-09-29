@@ -11,14 +11,14 @@
     "build": "tsup --config ./tsup.config.ts"
   },
   "dependencies": {
+    "@sequelize/core": "7.0.0-alpha.18",
     "cors": "^2.8.5",
     "dotenv-cli": "^6.0.0",
     "express": "^4.16.4",
     "log4js": "^6.6.1",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.2",
-    "node-schedule": "^2.1.0",
-    "sequelize": "^7.0.0-alpha.14"
+    "node-schedule": "^2.1.0"
   },
   "devDependencies": {
     "@sxzz/eslint-config": "^2.4.3",

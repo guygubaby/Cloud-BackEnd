@@ -4,7 +4,7 @@ import { SequelizeConnectionRefusedErrorName } from "../shared";
 import type { SweetNothingsInstance } from "./db-models/sweet-nothings";
 import type { CropsInstance } from "./db-models/crops";
 import type { FarmerInstance } from "./db-models/farmer";
-import type { ModelStatic } from "sequelize/types";
+import type { ModelStatic } from "@sequelize/core/types";
 
 const logger = createLogger("db Setup");
 

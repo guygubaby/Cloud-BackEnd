@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from "@sequelize/core";
 import { SweetNothingsDef } from "./db-models/sweet-nothings";
 import { CropsDef } from "./db-models/crops";
 import { FarmerDef } from "./db-models/farmer";

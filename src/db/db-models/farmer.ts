@@ -1,5 +1,5 @@
-import { DataTypes } from "sequelize";
-import type { Model, Optional } from "sequelize";
+import { DataTypes } from "@sequelize/core";
+import type { Model, Optional } from "@sequelize/core";
 
 export const FarmerDef = {
   name: {
