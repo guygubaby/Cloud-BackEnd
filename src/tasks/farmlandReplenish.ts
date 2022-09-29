@@ -33,7 +33,7 @@ async function replenishFarmlandStore() {
       const maxiumCount = cropsMaxiumMap.get(requiredLevel);
       if (!maxiumCount) continue;
       if (crop.onSaleCount === maxiumCount) {
-        logger.info(`作物 ${crop.name} 在售量已经达最大限值`);
+        logger.info(`作物 ${crop.name} 在售量已经达最大限值，不再补货`);
         continue;
       }
       let updatedCount = crop.onSaleCount + newCropsCount;

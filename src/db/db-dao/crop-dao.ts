@@ -1,15 +1,5 @@
 import { Crops } from "..";
 
-/**
- * @return {{
- *  cropId: string
- *  name: string
- *  description: string
- *  onSaleCount: number
- *  price: number
- *  requiredLevel: number
- * }}
- */
 async function getCropsOnSaleList() {
   const cropsData = await Crops.findAll();
   return cropsData.map((dataItem) => {

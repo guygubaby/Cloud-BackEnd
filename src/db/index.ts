@@ -44,6 +44,7 @@ function isDatabaseConnectionError(err: any): err is Error & { name: string } {
 async function tryInitEntity(name: keyof typeof entitiesMap) {
   try {
     await entitiesMap[name].sync();
+    logger.info(`数据库实体 ${name} 初始完成`);
     return true;
   } catch (err) {
     if (
@@ -65,7 +66,7 @@ async function initDB() {
     tryInitEntity("Crops"),
     tryInitEntity("Farmer"),
   ]).then((results) => {
-    if (results.some(Boolean)) {
+    if (results.every(Boolean)) {
       process.exit();
     }
   });
