@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import { createLogger } from "../utils/logger";
 import { setupTasks } from "../tasks";
+import { SequelizeConnectionRefusedErrorName } from "../shared";
 import { SweetNothingsDef } from "./db-models/sweet-nothings";
 import { CropsDef } from "./db-models/crops";
 import { FarmerDef } from "./db-models/farmer";
@@ -37,19 +38,37 @@ const entitiesMap = {
   Farmer,
 };
 
-function tryInitEntity(name: keyof typeof entitiesMap) {
+function isDatabaseConnectionError(err: any): err is Error & { name: string } {
+  return err instanceof Error && Reflect.has(err, "name");
+}
+async function tryInitEntity(name: keyof typeof entitiesMap) {
   try {
-    entitiesMap[name].sync();
+    await entitiesMap[name].sync();
+    return true;
   } catch (err) {
+    if (
+      isDatabaseConnectionError(err) &&
+      err.name === SequelizeConnectionRefusedErrorName
+    ) {
+      logger.error(`🤪 数据库似乎未启动...`);
+      process.exit();
+    }
     logger.error(`数据库实体 ${name} 初始化出错了：${err}`);
+    return false;
   }
 }
 
 async function initDB() {
   // 数据库初始化方法
-  tryInitEntity("SweetNothings");
-  tryInitEntity("Crops");
-  tryInitEntity("Farmer");
+  Promise.all([
+    tryInitEntity("SweetNothings"),
+    tryInitEntity("Crops"),
+    tryInitEntity("Farmer"),
+  ]).then((results) => {
+    if (results.some(Boolean)) {
+      process.exit();
+    }
+  });
 
   // 启动一些定时任务
   setupTasks();

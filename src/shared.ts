@@ -1,6 +1,20 @@
 import type { RequestMetaMap } from "./types";
 import type { RequestHandler, Router } from "express";
 
+export const SequelizeConnectionRefusedErrorName =
+  "SequelizeConnectionRefusedError";
+export const cropsMaxiumMap = new Map([
+  [1, 100],
+  [2, 100],
+  [4, 80],
+  [5, 80],
+  [6, 40],
+  [7, 40],
+  [8, 30],
+  [9, 30],
+  [10, 20],
+]);
+
 export function bindRouteHandler<P extends keyof RequestMetaMap>(
   router: Router,
   method: "GET" | "POST" | "PUT" | "DELETE",
@@ -18,15 +32,3 @@ export function bindRouteHandler<P extends keyof RequestMetaMap>(
   // @ts-ignore
   router[method.toLowerCase()](path, ...handlers);
 }
-
-export const cropsMaxiumMap = new Map([
-  [1, 100],
-  [2, 100],
-  [4, 80],
-  [5, 80],
-  [6, 40],
-  [7, 40],
-  [8, 30],
-  [9, 30],
-  [10, 20],
-]);
