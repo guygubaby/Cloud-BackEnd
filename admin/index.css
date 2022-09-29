@@ -1,0 +1,9 @@
+[v-cloak] {
+  display: none;
+}
+.sweet-nothing-input input {
+  min-width: 400px;
+}
+.tree-hole-admin__alert {
+  transition: all 0.3s ease;
+}

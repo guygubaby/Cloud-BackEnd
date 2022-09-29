@@ -9,27 +9,55 @@
     type="image/x-icon" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" 
+    integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer" 
+  />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="/admin/bundle.min.css">
   <link rel="stylesheet" href="/admin/index.css">
   <title>兔头和小刺猬的树屋 - 微信云托管</title>
+
+  <script type="module" src="/admin/index.js"></script>
 </head>
 
-<body>
+<body v-scope>
   <div class="container">
+    <!-- tree hole alert -->
+    <div
+      v-cloak 
+      class="tree-hole-admin__alert notification is-success is-light py-2"
+      v-show="isShowAlert"
+    >
+      <button class="delete" @click="closeAlert"></button>
+      <span>{{ alertMsg }}</span>
+    </div>
+    
+    
     <div class="title">
       <img class="title-logo"
         src="https://static-index-4gtuqm3bfa95c963-1304825656.tcloudbaseapp.com/official-website/favicon.svg" />
-      <div style="display: inline; margin-bottom: 48px" class="title-text">兔头和小刺猬的树屋 - 微信云托管</div>
+      <div style="display: inline; margin-bottom: 10px" class="title-text">兔头和小刺猬的树屋 - 微信云托管</div>
     </div>
     <div style="text-align: center; display: flex; flex-direction: column; align-items: center; margin: 0">
       <!-- 在这里加入内容 -->
+      <div class="sweet-nothing-input field is-flex m-5">
+        <p class="control has-icons-left">
+          <input class="input" type="text" placeholder="写下一句新的情话吧！" v-model:value="sweetNothing">
+          <span class="icon is-small is-left">
+            <i class="fas fa-heart has-text-danger"></i>
+          </span>
+        </p>
+        <button class="button is-danger is-light ml-4" @click="submitSweetNothing">提交</button>
+      </div>
       
-      <!-- 快速入门 footer -->
+      <!-- 微信云开发相关内容 -->
       <div>
         <div class="hr">
-          <span class="hr-text">快速入门</span>
+          <span class="hr-text">微信云开发相关内容</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-top: 16px;">
           <a class="btn btn-light btn-lg link-button" style="border: 0; box-shadow: none; margin-right: 12px;"
@@ -70,10 +98,4 @@
     </div>
   </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script>
-  // 在这里书写 JS 代码逻辑
-</script>
-
 </html>
