@@ -18,7 +18,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.3.2",
     "node-schedule": "^2.1.0",
-    "sequelize": "^6.8.0"
+    "sequelize": "^7.0.0-alpha.14"
   },
   "devDependencies": {
     "@sxzz/eslint-config": "^2.4.3",
