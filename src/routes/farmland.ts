@@ -1,13 +1,13 @@
-import express from "express";
+import { Router } from "express";
 import { Crops, Farmer } from "../db";
 import { getCropsOnSaleList } from "../db/db-dao/crop-dao";
 import { cropsData } from "../data/crops-init-data";
 import { bindRouteHandler } from "../shared";
 import { createLogger } from "../utils/logger";
-import type { Router } from "express";
+import { respFailed, respSuccess } from "../utils/respProcess";
 
 const logger = createLogger("Route Farmland");
-export const farmlandRouter: Router = express.Router();
+export const farmlandRouter = Router();
 
 // 初始化农场作物数据
 bindRouteHandler(
@@ -21,15 +21,9 @@ bindRouteHandler(
           await Crops.create(crop);
         })
       );
-      res.json({
-        statusMsg: "初始化农场成功！",
-      });
+      respSuccess(res, logger, { statusMsg: "初始化农场成功！" });
     } catch (err) {
-      res.status(400);
-      res.json({
-        statusMsg: "初始化农场失败！",
-        errMsg: String(err),
-      });
+      respFailed(res, logger, { err, msg: "初始化农场失败！" });
     }
   }
 );
@@ -41,15 +35,9 @@ bindRouteHandler(
   async (_, res) => {
     try {
       await Farmer.create({ name: "琳琳" });
-      res.json({
-        statusMsg: "初始化耕种者成功！",
-      });
+      respSuccess(res, logger, { statusMsg: "初始化耕种者成功！" });
     } catch (err) {
-      res.status(400);
-      res.json({
-        statusMsg: "初始化耕种者失败！",
-        errMsg: String(err),
-      });
+      respFailed(res, logger, { err, msg: "初始化耕种者失败！" });
     }
   }
 );
@@ -69,16 +57,12 @@ bindRouteHandler(
       if (!farmer) {
         throw new Error(`没有找到耕种者 ${name} 的信息`);
       }
-      res.status(200).json({
+      respSuccess(res, logger, {
         statusMsg: `获取耕种者状态成功！`,
-        farmer,
+        data: farmer,
       });
     } catch (err) {
-      res.status(400);
-      res.json({
-        statusMsg: "获取耕种者状态信息失败！",
-        errMsg: String(err),
-      });
+      respFailed(res, logger, { err, msg: "获取耕种者状态信息失败！" });
     }
   }
 );
@@ -87,19 +71,15 @@ bindRouteHandler(
   farmlandRouter,
   "GET",
   "/api/farmland/on-sale",
-  async (req, res) => {
+  async (_, res) => {
     try {
       const crops = await getCropsOnSaleList();
-      res.json({
+      respSuccess(res, logger, {
         statusMsg: "获取农场商店出售表成功！",
-        crops,
+        data: crops,
       });
     } catch (err) {
-      res.status(400);
-      res.json({
-        statusMsg: "获取农场商店出售表失败！",
-        errMsg: String(err),
-      });
+      respFailed(res, logger, { err, msg: "获取农场商店出售表失败！" });
     }
   }
 );
@@ -122,15 +102,9 @@ bindRouteHandler(
       await farmer.update({
         coins: farmer.coins - crop.price * count,
       });
-      res.json({
-        statusMsg: `购买 ${cropName} 成功！`,
-      });
+      respSuccess(res, logger, { statusMsg: `购买 ${cropName} 成功！` });
     } catch (err) {
-      res.status(400);
-      res.json({
-        statusMsg: `购买 ${cropName} 失败！`,
-        errMsg: String(err),
-      });
+      respFailed(res, logger, { err, msg: `购买 ${cropName} 失败！` });
     }
   }
 );

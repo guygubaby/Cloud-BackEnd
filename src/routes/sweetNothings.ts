@@ -1,12 +1,12 @@
-import express from "express";
 import { Sequelize } from "@sequelize/core";
+import { Router } from "express";
 import { SweetNothings } from "../db";
 import { bindRouteHandler } from "../shared";
 import { createLogger } from "../utils/logger";
-import type { Router } from "express";
+import { respFailed, respSuccess } from "../utils/respProcess";
 
 const logger = createLogger("Route SweetNothings");
-export const sweetNothingsRouter: Router = express.Router();
+export const sweetNothingsRouter = Router();
 
 // 记录保存情话
 bindRouteHandler(
@@ -22,10 +22,9 @@ bindRouteHandler(
           logger.info(`添加了一句情话：${sweet.sentence}`);
         })
       );
-      res.json({ statusMsg: "添加情话成功！" });
+      respSuccess(res, logger, { statusMsg: "添加情话成功！" });
     } catch (err) {
-      res.status(400);
-      res.json({ statusMsg: "添加情话失败！", errMsg: String(err) });
+      respFailed(res, logger, { err, msg: "添加情话失败！" });
     }
   }
 );
@@ -40,18 +39,17 @@ bindRouteHandler(
         order: [Sequelize.literal("rand()")],
       });
       if (randomRecord?.sentence) {
-        res.json({
+        respSuccess(res, logger, {
           statusMsg: "获取情话成功！",
-          sentence: randomRecord.sentence,
+          data: {
+            sentence: randomRecord.sentence,
+          },
         });
       } else {
         throw new Error("情话记录没有 sentence 字段！");
       }
     } catch (err) {
-      res.json({
-        statusMsg: "获取情话失败！",
-        errMsg: String(err),
-      });
+      respFailed(res, logger, { err, msg: "获取情话失败！" });
     }
   }
 );

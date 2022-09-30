@@ -1,21 +1,34 @@
 type RequestMetaDef<
-  ReqBody extends Record<string, any> = {},
-  ReqQuery extends Record<string, string> = {}
+  R extends {
+    body?: Record<string, any>;
+    query?: Record<string, string>;
+  } = { body: {}; query: {} }
 > = {
-  body: ReqBody;
-  query: ReqQuery;
+  body: R["body"];
+  query: R["query"];
 };
+
 export type RequestMetaMap = {
   "/api/sweet-nothings": RequestMetaDef<{
-    sentences: string[];
+    body: { sentences: string[] };
   }>;
   "/api/farmland/init-crops": RequestMetaDef;
   "/api/farmland/init-farmer": RequestMetaDef;
-  "/api/farmland/status": RequestMetaDef<{}, { name: string }>;
+  "/api/farmland/status": RequestMetaDef<{
+    query: { name: string };
+  }>;
   "/api/farmland/on-sale": RequestMetaDef;
   "/api/farmland/buy-crop": RequestMetaDef<{
-    cropId: string;
-    cropName: string;
-    count: number;
+    body: {
+      cropId: string;
+      cropName: string;
+      count: number;
+    };
+  }>;
+  "/api/menstruation/record": RequestMetaDef<{
+    body: {
+      start: number;
+      end: number;
+    };
   }>;
 };

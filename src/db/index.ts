@@ -47,4 +47,4 @@ async function initDB() {
 }
 
 // 导出初始化方法和模型
-export { initDB, SweetNothings, Crops, Farmer };
+export { initDB, SweetNothings, Crops, Farmer, Menstruation };
