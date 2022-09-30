@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { Menstruation } from "../db";
 import { bindRouteHandler } from "../shared";
 import { createLogger } from "../utils/logger";
-import { respFailed } from "../utils/respProcess";
+import { respFailed, respSuccess } from "../utils/respProcess";
 
 const logger = createLogger("Route menstruation");
 export const menstruationRouter = Router();
@@ -15,10 +15,17 @@ bindRouteHandler(
   "/api/menstruation/record",
   async (req, res) => {
     const { start, end } = req.body;
+    const startDate = dayjs(start);
+    const endDate = dayjs(end);
     try {
       await Menstruation.create({
-        startDate: dayjs(start).toDate(),
-        endDate: dayjs(end).toDate(),
+        startDate: startDate.toDate(),
+        endDate: endDate.toDate(),
+      });
+      respSuccess(res, logger, {
+        statusMsg: `记录经期成功 ${startDate.format(
+          "YYYY/MM/DD"
+        )} - ${endDate.format("YYYY/MM/DD")}`,
       });
     } catch (err) {
       respFailed(res, logger, {

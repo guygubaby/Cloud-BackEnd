@@ -59,7 +59,7 @@ bindRouteHandler(
       }
       respSuccess(res, logger, {
         statusMsg: `获取耕种者状态成功！`,
-        data: farmer,
+        data: { farmer },
       });
     } catch (err) {
       respFailed(res, logger, { err, msg: "获取耕种者状态信息失败！" });
@@ -76,7 +76,7 @@ bindRouteHandler(
       const crops = await getCropsOnSaleList();
       respSuccess(res, logger, {
         statusMsg: "获取农场商店出售表成功！",
-        data: crops,
+        data: { crops },
       });
     } catch (err) {
       respFailed(res, logger, { err, msg: "获取农场商店出售表失败！" });
