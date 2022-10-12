@@ -15,6 +15,14 @@ bindRouteHandler(
   "/api/menstruation/record",
   async (req, res) => {
     const { start, end } = req.body;
+    if (Number.isNaN(start) || Number.isNaN(end)) {
+      respFailed(res, logger, {
+        err: new Error("请求参数中的日期范围有误"),
+        msg: "记录经期请求失败",
+      });
+      return;
+    }
+
     const startDate = dayjs(start);
     const endDate = dayjs(end);
     try {
