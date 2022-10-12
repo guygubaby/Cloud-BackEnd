@@ -6,6 +6,7 @@ import { initDB } from "./db";
 import { farmlandRouter } from "./routes/farmland";
 import { sweetNothingsRouter } from "./routes/sweetNothings";
 import { createLogger } from "./utils/logger";
+import { menstruationRouter } from "./routes/menstruation";
 
 const morganLog4js = createLogger("morgan");
 const logger = morgan("tiny", {
@@ -39,6 +40,9 @@ app.use(sweetNothingsRouter);
 
 // 农场 API
 app.use(farmlandRouter);
+
+// 经期 API
+app.use(menstruationRouter);
 
 const port = process.env.PORT || 80;
 
