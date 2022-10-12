@@ -27,8 +27,8 @@ bindRouteHandler(
     const endDate = dayjs(end);
     try {
       await Menstruation.create({
-        startDate: startDate.toDate(),
-        endDate: endDate.toDate(),
+        startTimestamp: start,
+        endTimestamp: end,
       });
       respSuccess(res, logger, {
         statusMsg: `记录经期成功 ${startDate.format(

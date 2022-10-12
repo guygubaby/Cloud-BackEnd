@@ -2,11 +2,15 @@ import path from "path";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import dayjs from "dayjs";
 import { initDB } from "./db";
 import { farmlandRouter } from "./routes/farmland";
 import { sweetNothingsRouter } from "./routes/sweetNothings";
 import { createLogger } from "./utils/logger";
 import { menstruationRouter } from "./routes/menstruation";
+
+import "dayjs/locale/zh-cn";
+dayjs.locale("zh-cn");
 
 const morganLog4js = createLogger("morgan");
 const logger = morgan("tiny", {

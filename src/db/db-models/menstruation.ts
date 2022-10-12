@@ -2,19 +2,19 @@ import { DataTypes } from "@sequelize/core";
 import type { Model } from "@sequelize/core";
 
 export const MenstruationDef = {
-  startDate: {
-    type: DataTypes.DATE,
+  startTimestamp: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
-  endDate: {
-    type: DataTypes.DATE,
+  endTimestamp: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 };
 
 export type MenstruationAttributes = {
-  startDate: Date;
-  endDate: Date;
+  startTimestamp: number;
+  endTimestamp: number;
 };
 export type MenstruationInstance = Model<MenstruationAttributes> &
   MenstruationAttributes;
