@@ -34,9 +34,9 @@ bindRouteHandler(
       });
       respSuccess(res, logger, {
         statusMsg: `记录经期成功 ${startDate
-          .utcOffset(0)
+          .utcOffset(8)
           .format("YYYY/MM/DD")} - ${endDate
-          .utcOffset(0)
+          .utcOffset(8)
           .format("YYYY/MM/DD")}`,
       });
     } catch (err) {
