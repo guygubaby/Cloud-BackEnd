@@ -34,7 +34,8 @@ export function respFailed(
 ) {
   const errMsg = `${msg} ${err}`;
   logger.error(errMsg);
-  res.status(statusCode).json({
+  res.status(statusCode);
+  res.json({
     statusMsg: msg,
     errMsg,
   });
