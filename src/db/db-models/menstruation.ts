@@ -3,11 +3,11 @@ import type { Model } from "@sequelize/core";
 
 export const MenstruationDef = {
   startTimestamp: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.BIGINT,
     allowNull: false,
   },
   endTimestamp: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.BIGINT,
     allowNull: false,
   },
 };
