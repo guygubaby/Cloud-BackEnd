@@ -5,6 +5,8 @@ import { bindRouteHandler } from "../shared";
 import { createLogger } from "../utils/logger";
 import { respFailed, respSuccess } from "../utils/respProcess";
 
+import "dayjs/plugin/utc";
+
 const logger = createLogger("Route menstruation");
 export const menstruationRouter = Router();
 
@@ -31,9 +33,11 @@ bindRouteHandler(
         endTimestamp: end,
       });
       respSuccess(res, logger, {
-        statusMsg: `记录经期成功 ${startDate.format(
-          "YYYY/MM/DD"
-        )} - ${endDate.format("YYYY/MM/DD")}`,
+        statusMsg: `记录经期成功 ${startDate
+          .utcOffset(0)
+          .format("YYYY/MM/DD")} - ${endDate
+          .utcOffset(0)
+          .format("YYYY/MM/DD")}`,
       });
     } catch (err) {
       respFailed(res, logger, {
