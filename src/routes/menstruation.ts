@@ -29,6 +29,7 @@ bindRouteHandler(
     const endDate = dayjs(end);
     try {
       await Menstruation.create({
+        monthStr: startDate.format("YYYY-MM"),
         startTimestamp: start,
         endTimestamp: end,
       });
@@ -47,3 +48,4 @@ bindRouteHandler(
     }
   }
 );
+// 获取某月经期范围

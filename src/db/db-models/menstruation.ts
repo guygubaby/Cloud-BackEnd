@@ -2,6 +2,10 @@ import { DataTypes } from "@sequelize/core";
 import type { Model } from "@sequelize/core";
 
 export const MenstruationDef = {
+  monthStr: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   startTimestamp: {
     type: DataTypes.BIGINT,
     allowNull: false,
@@ -13,6 +17,7 @@ export const MenstruationDef = {
 };
 
 export type MenstruationAttributes = {
+  monthStr: string;
   startTimestamp: number;
   endTimestamp: number;
 };
