@@ -30,5 +30,8 @@ export type RequestMetaMap = {
       start: number;
       end: number;
     };
+    query: {
+      monthStr: string;
+    };
   }>;
 };
