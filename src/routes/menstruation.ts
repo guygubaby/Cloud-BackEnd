@@ -70,7 +70,7 @@ bindRouteHandler(
           monthStr,
         },
       });
-      if (found !== null) {
+      if (found) {
         const { startTimestamp, endTimestamp } = found;
         respSuccess(res, logger, {
           statusMsg: `获取 ${monthStr} 经期范围成功`,
@@ -78,6 +78,11 @@ bindRouteHandler(
             startTimestamp,
             endTimestamp,
           },
+        });
+      } else {
+        respSuccess(res, logger, {
+          statusMsg: `未找到 ${monthStr} 的经期记录`,
+          data: {},
         });
       }
     } catch (err) {
