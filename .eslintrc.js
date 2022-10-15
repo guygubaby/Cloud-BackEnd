@@ -5,5 +5,6 @@ module.exports = {
   rules: {
     "unicorn/prefer-node-protocol": "off",
     "no-console": "off",
+    "require-await": "off",
   },
 };

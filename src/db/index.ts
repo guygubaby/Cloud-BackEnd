@@ -37,7 +37,7 @@ const entitiesMap = {
 };
 
 async function initDB() {
-  setupDB(entitiesMap);
+  await setupDB(entitiesMap);
 }
 
 // 导出初始化方法和模型

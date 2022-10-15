@@ -50,7 +50,9 @@ bindRouteHandler(
     try {
       let { name } = req.query;
       name = decodeURIComponent(name);
-      logger.info(`🚀 正在查询耕种者 ${name} 的信息 ...`);
+      logger.info(
+        `🚀 正在查询耕种者 ${name} ${req.headers["x-wx-openid"]} 的信息 ...`
+      );
       const farmer = await Farmer.findOne({
         where: { name },
       });
