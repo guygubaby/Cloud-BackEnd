@@ -10,9 +10,16 @@ export function respSuccess<D extends object>(
   }: {
     statusMsg: string;
     data?: D;
-  }
+  },
+  {
+    silent = false,
+  }: {
+    silent?: boolean;
+  } = {}
 ) {
-  logger.info(statusMsg);
+  if (!silent && statusMsg) {
+    logger.info(statusMsg);
+  }
   res.status(200).json({
     statusMsg,
     ...data,

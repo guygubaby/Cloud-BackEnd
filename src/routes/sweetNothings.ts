@@ -39,12 +39,17 @@ bindRouteHandler(
         order: [Sequelize.literal("rand()")],
       });
       if (randomRecord?.sentence) {
-        respSuccess(res, logger, {
-          statusMsg: "获取情话成功！",
-          data: {
-            sentence: randomRecord.sentence,
+        respSuccess(
+          res,
+          logger,
+          {
+            statusMsg: "获取情话成功！",
+            data: {
+              sentence: randomRecord.sentence,
+            },
           },
-        });
+          { silent: true }
+        );
       } else {
         throw new Error("情话记录没有 sentence 字段！");
       }

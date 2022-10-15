@@ -41,10 +41,15 @@ bindRouteHandler(
       if (!farmer) {
         throw new Error(`没有找到当前登录用户的耕种者的信息`);
       }
-      respSuccess(res, logger, {
-        statusMsg: `获取耕种者状态成功！`,
-        data: { farmer },
-      });
+      respSuccess(
+        res,
+        logger,
+        {
+          statusMsg: `获取耕种者状态成功！`,
+          data: { farmer },
+        },
+        { silent: true }
+      );
     } catch (err) {
       respFailed(res, logger, { err, msg: "获取耕种者状态信息失败！" });
     }
@@ -58,10 +63,15 @@ bindRouteHandler(
   async (_, res) => {
     try {
       const crops = await getCropsOnSaleList();
-      respSuccess(res, logger, {
-        statusMsg: "获取农场商店出售表成功！",
-        data: { crops },
-      });
+      respSuccess(
+        res,
+        logger,
+        {
+          statusMsg: "获取农场商店出售表成功！",
+          data: { crops },
+        },
+        { silent: true }
+      );
     } catch (err) {
       respFailed(res, logger, { err, msg: "获取农场商店出售表失败！" });
     }
@@ -110,7 +120,7 @@ bindRouteHandler(
         coins: farmer.coins - crop.price * count,
       });
       respSuccess(res, logger, {
-        statusMsg: `购买 ${count} 份 ${cropName} 成功！`,
+        statusMsg: `${farmer.name} 购买 ${count} 份 ${cropName} 成功！`,
       });
     } catch (err) {
       respFailed(res, logger, { err, msg: `购买 ${cropName} 失败！` });

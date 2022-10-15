@@ -72,13 +72,18 @@ bindRouteHandler(
       });
       if (found) {
         const { startTimestamp, endTimestamp } = found;
-        respSuccess(res, logger, {
-          statusMsg: `获取 ${monthStr} 经期范围成功`,
-          data: {
-            startTimestamp,
-            endTimestamp,
+        respSuccess(
+          res,
+          logger,
+          {
+            statusMsg: `获取 ${monthStr} 经期范围成功`,
+            data: {
+              startTimestamp,
+              endTimestamp,
+            },
           },
-        });
+          { silent: true }
+        );
       } else {
         respSuccess(res, logger, {
           statusMsg: `未找到 ${monthStr} 的经期记录`,
