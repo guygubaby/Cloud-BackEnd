@@ -6,7 +6,7 @@
   "author": "",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "dotenv -c local -- tsx src/index.ts",
+    "dev": "dotenv -c local -- tsx watch src/index.ts",
     "start": "dotenv -c prod -- node dist/index.js",
     "build": "tsup --config ./tsup.config.ts"
   },
@@ -16,6 +16,7 @@
     "dayjs": "^1.11.5",
     "dotenv-cli": "^6.0.0",
     "express": "^4.16.4",
+    "lodash": "^4.17.21",
     "log4js": "^6.6.1",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.2",
@@ -26,6 +27,7 @@
     "@sxzz/eslint-config-basic": "^2.4.3",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
+    "@types/lodash": "^4.14.186",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.7.18",
     "@types/node-schedule": "^2.1.0",

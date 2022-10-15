@@ -1,7 +1,16 @@
-import { DataTypes } from "@sequelize/core";
-import type { Model, Optional } from "@sequelize/core";
+import { DataTypes, Model } from "@sequelize/core";
+import type {
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from "@sequelize/core";
 
 export const FarmerDef = {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -32,21 +41,21 @@ export const FarmerDef = {
     allowNull: false,
     defaultValue: 3,
   },
+  createdAt: DataTypes.DATE,
+  updatedAt: DataTypes.DATE,
 };
 
-export type FarmerAttributes = {
-  name: string;
-  exp: number;
-  level: number;
-  coins: number;
-  manureCount: number;
-  GridCount: number;
-};
-export type FarmerInstance = Model<
-  FarmerAttributes,
-  Optional<
-    FarmerAttributes,
-    "exp" | "level" | "coins" | "manureCount" | "GridCount"
-  >
-> &
-  FarmerAttributes;
+export class Farmer extends Model<
+  InferAttributes<Farmer>,
+  InferCreationAttributes<Farmer>
+> {
+  declare id: CreationOptional<number>; // 自增主键
+  declare name: string;
+  declare exp: CreationOptional<number>;
+  declare level: CreationOptional<number>;
+  declare coins: CreationOptional<number>;
+  declare manureCount: CreationOptional<number>;
+  declare GridCount: CreationOptional<number>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
+}

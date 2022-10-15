@@ -1,27 +1,34 @@
 import { setupTasks } from "../tasks";
 import { createLogger } from "../utils/logger";
 import { SequelizeConnectionRefusedErrorName } from "../shared";
-import type { MenstruationInstance } from "./db-models/menstruation";
-import type { SweetNothingsInstance } from "./db-models/sweet-nothings";
-import type { CropsInstance } from "./db-models/crops";
-import type { FarmerInstance } from "./db-models/farmer";
-import type { ModelStatic } from "@sequelize/core/types";
+import type { ModelStatic } from "@sequelize/core";
+import type { SweetNothings } from "./db-models/sweet-nothings";
+import type { Crops } from "./db-models/crops";
+import type { Farmer } from "./db-models/farmer";
+import type { Menstruation } from "./db-models/menstruation";
+import type { FarmerCrops } from "./db-models/farmerCrops";
 
 const logger = createLogger("db Setup");
 
 interface EntitiesMap {
-  SweetNothings: ModelStatic<SweetNothingsInstance>;
-  Crops: ModelStatic<CropsInstance>;
-  Farmer: ModelStatic<FarmerInstance>;
-  Menstruation: ModelStatic<MenstruationInstance>;
+  SweetNothings: ModelStatic<SweetNothings>;
+  Crops: ModelStatic<Crops>;
+  Farmer: ModelStatic<Farmer>;
+  Menstruation: ModelStatic<Menstruation>;
+
+  // 关联表
+  FarmerCrops: ModelStatic<FarmerCrops>;
 }
+const associationTableNames = ["FarmerCrops"];
 
 function isDatabaseConnectionError(err: any): err is Error & { name: string } {
   return err instanceof Error && Reflect.has(err, "name");
 }
 function tryInitEntity(entitiesMap: EntitiesMap, name: keyof EntitiesMap) {
   return entitiesMap[name]
-    .sync({ alter: true })
+    .sync({
+      alter: associationTableNames.includes(name), // 关联表不需要 alter
+    })
     .then(() => {
       logger.info(`数据库实体 ${name} 初始完成`);
       return Promise.resolve(true);
@@ -50,15 +57,18 @@ function syncModelsStruct(entitiesMap: EntitiesMap) {
   });
 }
 function syncModelsRelationship(entitiesMap: EntitiesMap) {
-  const { Farmer, Crops } = entitiesMap;
-  Crops.belongsToMany(Farmer, { through: "FarmerCrops" });
+  const { Farmer, Crops, FarmerCrops } = entitiesMap;
+
+  // 耕作者 & 作物 多对多关系
+  Crops.belongsToMany(Farmer, { through: FarmerCrops });
+  Farmer.belongsToMany(Crops, { through: FarmerCrops });
 }
 
 export async function setupDB(entitiesMap: EntitiesMap) {
-  // 数据库模型基础结构初始化
-  syncModelsStruct(entitiesMap);
   // 数据库模型关联初始化
   syncModelsRelationship(entitiesMap);
+  // 数据库模型基础结构初始化
+  syncModelsStruct(entitiesMap);
 
   // 启动一些定时任务
   setupTasks();

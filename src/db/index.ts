@@ -1,13 +1,10 @@
 import { Sequelize } from "@sequelize/core";
-import { SweetNothingsDef } from "./db-models/sweet-nothings";
-import { CropsDef } from "./db-models/crops";
-import { FarmerDef } from "./db-models/farmer";
+import { SweetNothings, SweetNothingsDef } from "./db-models/sweet-nothings";
+import { Crops, CropsDef } from "./db-models/crops";
+import { Farmer, FarmerDef } from "./db-models/farmer";
 import { setupDB } from "./setup";
-import { MenstruationDef } from "./db-models/menstruation";
-import type { MenstruationInstance } from "./db-models/menstruation";
-import type { FarmerInstance } from "./db-models/farmer";
-import type { CropsInstance } from "./db-models/crops";
-import type { SweetNothingsInstance } from "./db-models/sweet-nothings";
+import { Menstruation, MenstruationDef } from "./db-models/menstruation";
+import { FarmerCrops, FarmerCropsDef } from "./db-models/farmerCrops";
 
 // 从环境变量中读取数据库配置
 const {
@@ -23,23 +20,20 @@ const sequelize = new Sequelize("tree-hole", MYSQL_USERNAME, MYSQL_PASSWORD, {
   logging: process.env.SHOW_SQL === "true",
 });
 
-// 定义数据模型
-const SweetNothings = sequelize.define<SweetNothingsInstance>(
-  "SweetNothings",
-  SweetNothingsDef
-);
-const Crops = sequelize.define<CropsInstance>("Crops", CropsDef);
-const Farmer = sequelize.define<FarmerInstance>("Farmer", FarmerDef);
-const Menstruation = sequelize.define<MenstruationInstance>(
-  "Menstruation",
-  MenstruationDef
-);
+// 初始化数据模型
+SweetNothings.init(SweetNothingsDef, { sequelize });
+Crops.init(CropsDef, { sequelize });
+Farmer.init(FarmerDef, { sequelize });
+Menstruation.init(MenstruationDef, { sequelize });
+// 定义关联表
+FarmerCrops.init(FarmerCropsDef, { sequelize, timestamps: false });
 
 const entitiesMap = {
   SweetNothings,
   Crops,
   Farmer,
   Menstruation,
+  FarmerCrops,
 };
 
 async function initDB() {
@@ -47,4 +41,4 @@ async function initDB() {
 }
 
 // 导出初始化方法和模型
-export { initDB, SweetNothings, Crops, Farmer, Menstruation };
+export { initDB, SweetNothings, Crops, Farmer, Menstruation, FarmerCrops };

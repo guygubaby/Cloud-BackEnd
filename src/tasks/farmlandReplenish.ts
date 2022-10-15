@@ -49,5 +49,6 @@ async function replenishFarmlandStore() {
 
 /** 每周二、周四早 7:00 补充农场货架 */
 export function startFarmlandReplenishCronTask() {
+  logger.log("开始初始化定时任务：每周二、周四早 7:00 补充农场货架");
   return schedule.scheduleJob("0 0 7 * * 2,4", replenishFarmlandStore);
 }

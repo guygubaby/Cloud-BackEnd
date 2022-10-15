@@ -1,7 +1,16 @@
-import { DataTypes } from "@sequelize/core";
-import type { Model } from "@sequelize/core";
+import { DataTypes, Model } from "@sequelize/core";
+import type {
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from "@sequelize/core";
 
 export const CropsDef = {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   cropId: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -39,16 +48,23 @@ export const CropsDef = {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  createdAt: DataTypes.DATE,
+  updatedAt: DataTypes.DATE,
 };
 
-export type CropsAttributes = {
-  cropId: string;
-  name: string;
-  description: string;
-  requiredLevel: number;
-  seedCount: number;
-  harvestCount: number;
-  onSaleCount: number;
-  price: number;
-};
-export type CropsInstance = Model<CropsAttributes> & CropsAttributes;
+export class Crops extends Model<
+  InferAttributes<Crops>,
+  InferCreationAttributes<Crops>
+> {
+  declare id: CreationOptional<number>; // 自增主键
+  declare cropId: string; // 作物标识符
+  declare name: string;
+  declare description: string;
+  declare requiredLevel: number;
+  declare seedCount: number;
+  declare harvestCount: number;
+  declare onSaleCount: number;
+  declare price: number;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
+}
