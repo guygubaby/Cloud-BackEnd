@@ -55,6 +55,7 @@ export class Farmer extends Model<
 > {
   declare id: CreationOptional<number>; // 自增主键
   declare name: string;
+  declare openId: string;
   declare exp: CreationOptional<number>;
   declare level: CreationOptional<number>;
   declare coins: CreationOptional<number>;
