@@ -11,6 +11,10 @@ export const FarmerDef = {
     primaryKey: true,
     autoIncrement: true,
   },
+  openId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
