@@ -4,8 +4,8 @@ type RequestMetaDef<
     query?: Record<string, string>;
   } = { body: {}; query: {} }
 > = {
-  body: R["body"];
-  query: R["query"];
+  body: R["body"] & {};
+  query: R["query"] & {};
 };
 
 export type RequestMetaMap = {

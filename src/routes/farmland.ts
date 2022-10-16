@@ -5,6 +5,7 @@ import { cropsData } from "../data/crops-init-data";
 import { bindRouteHandler } from "../shared";
 import { createLogger } from "../utils/logger";
 import { respFailed, respSuccess } from "../utils/respProcess";
+import { useOpenId } from "../utils/openId";
 
 const logger = createLogger("Route Farmland");
 export const farmlandRouter = Router();
@@ -34,7 +35,7 @@ bindRouteHandler(
   "/api/farmland/status",
   async (req, res) => {
     try {
-      const openId = req.headers["x-wx-openid"] as string;
+      const openId = useOpenId(req);
       const farmer = await Farmer.findOne({
         where: { openId },
       });
@@ -84,7 +85,7 @@ bindRouteHandler(
   "/api/farmland/buy-crop",
   async (req, res) => {
     const { cropId, cropName, count } = req.body;
-    const openId = req.headers["x-wx-openid"] as string;
+    const openId = useOpenId(req);
     try {
       const farmer = await Farmer.findOne({ where: { openId } });
       if (!farmer) throw new Error("没有找到当前登录用户的耕作者数据实体！");
