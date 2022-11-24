@@ -142,21 +142,22 @@ bindRouteHandler(
     const farmerOwns = await FarmerCrops.findAll({
       where: { FarmerId: farmer.id },
     });
-    const ownData: FarmerOwnThing[] = [];
+    const ownThings: FarmerOwnThing[] = [];
     for (const ownCrop of farmerOwns) {
       const crop = await Crops.findOne({ where: { id: ownCrop.CropId } });
       if (!crop)
         throw new Error(`查找 Crop ID ${ownCrop.CropId} 数据实体出错！`);
-      ownData.push({
+      ownThings.push({
         type: "crop",
         name: crop.name,
         count: ownCrop.count,
+        cropId: crop.cropId,
       });
     }
 
     respSuccess(res, logger, {
       statusMsg: `${farmer.name} 获取仓库信息成功！`,
-      data: { ownData },
+      data: { ownThings },
     });
   }
 );
