@@ -25,6 +25,9 @@ export type RequestMetaMap = {
       count: number;
     };
   }>;
+  "/api/farmland/warehouse": RequestMetaDef<{
+    query: {};
+  }>;
   "/api/menstruation/record": RequestMetaDef<{
     body: {
       start: number;

@@ -6,6 +6,7 @@ import { bindRouteHandler } from "../shared";
 import { createLogger } from "../utils/logger";
 import { respFailed, respSuccess } from "../utils/respProcess";
 import { useOpenId } from "../utils/openId";
+import type { FarmerOwnThing } from "../db/types";
 
 const logger = createLogger("Route Farmland");
 export const farmlandRouter = Router();
@@ -126,5 +127,36 @@ bindRouteHandler(
     } catch (err) {
       respFailed(res, logger, { err, msg: `购买 ${cropName} 失败！` });
     }
+  }
+);
+// 获取仓库所有的东西
+bindRouteHandler(
+  farmlandRouter,
+  "GET",
+  "/api/farmland/warehouse",
+  async (req, res) => {
+    const openId = useOpenId(req);
+    const farmer = await Farmer.findOne({ where: { openId } });
+    if (!farmer) throw new Error("没有找到当前登录用户的耕作者数据实体！");
+    // 找到耕作者的作物信息
+    const farmerOwns = await FarmerCrops.findAll({
+      where: { FarmerId: farmer.id },
+    });
+    const ownData: FarmerOwnThing[] = [];
+    for (const ownCrop of farmerOwns) {
+      const crop = await Crops.findOne({ where: { id: ownCrop.CropId } });
+      if (!crop)
+        throw new Error(`查找 Crop ID ${ownCrop.CropId} 数据实体出错！`);
+      ownData.push({
+        type: "crop",
+        name: crop.name,
+        count: ownCrop.count,
+      });
+    }
+
+    respSuccess(res, logger, {
+      statusMsg: `${farmer.name} 获取仓库信息成功！`,
+      data: { ownData },
+    });
   }
 );

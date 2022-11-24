@@ -62,6 +62,8 @@ function syncModelsRelationship(entitiesMap: EntitiesMap) {
   // 耕作者 & 作物 多对多关系
   Crops.belongsToMany(Farmer, { through: FarmerCrops });
   Farmer.belongsToMany(Crops, { through: FarmerCrops });
+
+  // 耕作者 & 土地 一对多关系
 }
 
 export async function setupDB(entitiesMap: EntitiesMap) {
